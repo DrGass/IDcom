@@ -1,0 +1,1762 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "pl.test.cms.v1.api",
+    "description": "API do obsługi usługi CMS v1"
+  },
+  "servers": [
+    {
+      "url": "http://test-cms-v1-api.localhost/api"
+    }
+  ],
+  "paths": {
+    "/ping": {
+      "get": {
+        "summary": "[Public] Odbija request w celu sprawdzenia działania api",
+        "operationId": "ping_api_get",
+        "responses": {
+          "200": {
+            "description": "Pong"
+          },
+          "400": {
+            "$ref": "#/components/responses/error_400"
+          },
+          "403": {
+            "$ref": "#/components/responses/error_403"
+          },
+          "404": {
+            "$ref": "#/components/responses/error_404"
+          },
+          "500": {
+            "$ref": "#/components/responses/error_500"
+          }
+        },
+        "tags": [
+          "ping"
+        ]
+      }
+    },
+    "/site/{site_id}/module/gallery": {
+      "get": {
+        "summary": "[User] Podaje listę albumów w galerii",
+        "description": "Lista sortowana po polu: sort DESC",
+        "operationId": "gallery_get_list",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/site_id"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "source": {
+                    "$ref": "#/components/schemas/source"
+                  },
+                  "paginate": {
+                    "$ref": "#/components/schemas/paginate"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Lista galerii z paginacją",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data",
+                    "pagination"
+                  ],
+                  "properties": {
+                    "pagination": {
+                      "$ref": "#/components/schemas/pagination"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/gallery_list"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error_400"
+          },
+          "403": {
+            "$ref": "#/components/responses/error_403"
+          },
+          "404": {
+            "$ref": "#/components/responses/error_404"
+          },
+          "500": {
+            "$ref": "#/components/responses/error_500"
+          }
+        },
+        "tags": [
+          "module gallery"
+        ]
+      },
+      "post": {
+        "summary": "[User] Dodaje album do galerii",
+        "operationId": "gallery_add",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/site_id"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/gallery_new_payload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Dodano galerię",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "gallery_id": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error_400"
+          },
+          "403": {
+            "$ref": "#/components/responses/error_403"
+          },
+          "404": {
+            "$ref": "#/components/responses/error_404"
+          },
+          "500": {
+            "$ref": "#/components/responses/error_500"
+          }
+        },
+        "tags": [
+          "module gallery"
+        ]
+      },
+      "options": {
+        "summary": "[User] Podaje opcje galerii",
+        "operationId": "gallery_get_options",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/site_id"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "source": {
+                    "$ref": "#/components/schemas/source"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Opcje galerii",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "subject_list": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error_400"
+          },
+          "403": {
+            "$ref": "#/components/responses/error_403"
+          },
+          "404": {
+            "$ref": "#/components/responses/error_404"
+          },
+          "500": {
+            "$ref": "#/components/responses/error_500"
+          }
+        },
+        "tags": [
+          "module gallery"
+        ]
+      }
+    },
+    "/site/{site_id}/module/gallery/{gallery_id}": {
+      "get": {
+        "summary": "[User] Podaje dane galerii i zdjęcia",
+        "description": "Lista zdjęć sortowana po polu: sort DESC",
+        "operationId": "gallery_get_one",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/site_id"
+          },
+          {
+            "$ref": "#/components/parameters/gallery_id"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "source": {
+                    "$ref": "#/components/schemas/source"
+                  },
+                  "paginate": {
+                    "$ref": "#/components/schemas/paginate"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Galeria ze zdjęciami i paginacją",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data",
+                    "pagination"
+                  ],
+                  "properties": {
+                    "pagination": {
+                      "$ref": "#/components/schemas/pagination"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/gallery"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error_400"
+          },
+          "403": {
+            "$ref": "#/components/responses/error_403"
+          },
+          "404": {
+            "$ref": "#/components/responses/error_404"
+          },
+          "500": {
+            "$ref": "#/components/responses/error_500"
+          }
+        },
+        "tags": [
+          "module gallery"
+        ]
+      },
+      "post": {
+        "summary": "[User] Dodaje zdjęcie do albumu",
+        "operationId": "gallery_photo_upload",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/site_id"
+          },
+          {
+            "$ref": "#/components/parameters/gallery_id"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "file",
+                  "source",
+                  "payload"
+                ],
+                "properties": {
+                  "file": {
+                    "$ref": "#/components/schemas/gallery_photo_file"
+                  },
+                  "payload": {
+                    "type": "object",
+                    "required": [
+                      "description"
+                    ],
+                    "properties": {
+                      "description": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "source": {
+                    "$ref": "#/components/schemas/source"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Dodano zdjęcie do galerii",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "photo_id": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error_400"
+          },
+          "403": {
+            "$ref": "#/components/responses/error_403"
+          },
+          "404": {
+            "$ref": "#/components/responses/error_404"
+          },
+          "500": {
+            "$ref": "#/components/responses/error_500"
+          }
+        },
+        "tags": [
+          "module gallery"
+        ]
+      },
+      "put": {
+        "summary": "[User] Aktualizuje nazwę i opis albumu",
+        "operationId": "gallery_change",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/site_id"
+          },
+          {
+            "$ref": "#/components/parameters/gallery_id"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/gallery_new_payload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Zmieniono nazwę i opis albumu"
+          },
+          "400": {
+            "$ref": "#/components/responses/error_400"
+          },
+          "403": {
+            "$ref": "#/components/responses/error_403"
+          },
+          "404": {
+            "$ref": "#/components/responses/error_404"
+          },
+          "500": {
+            "$ref": "#/components/responses/error_500"
+          }
+        },
+        "tags": [
+          "module gallery"
+        ]
+      },
+      "delete": {
+        "summary": "[User] Usuwa album z galerii",
+        "operationId": "gallery_delete",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/site_id"
+          },
+          {
+            "$ref": "#/components/parameters/gallery_id"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "source": {
+                    "$ref": "#/components/schemas/source"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Usunięto galerię"
+          },
+          "400": {
+            "$ref": "#/components/responses/error_400"
+          },
+          "403": {
+            "$ref": "#/components/responses/error_403"
+          },
+          "404": {
+            "$ref": "#/components/responses/error_404"
+          },
+          "500": {
+            "$ref": "#/components/responses/error_500"
+          }
+        },
+        "tags": [
+          "module gallery"
+        ]
+      }
+    },
+    "/site/{site_id}/module/gallery/{gallery_id}/move_up": {
+      "put": {
+        "summary": "[User] Przesuwa album na liście w górę",
+        "operationId": "gallery_move_up",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/site_id"
+          },
+          {
+            "$ref": "#/components/parameters/gallery_id"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "source": {
+                    "$ref": "#/components/schemas/source"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Przesunięto album w górę"
+          },
+          "400": {
+            "$ref": "#/components/responses/error_400"
+          },
+          "403": {
+            "$ref": "#/components/responses/error_403"
+          },
+          "404": {
+            "$ref": "#/components/responses/error_404"
+          },
+          "500": {
+            "$ref": "#/components/responses/error_500"
+          }
+        },
+        "tags": [
+          "module gallery"
+        ]
+      }
+    },
+    "/site/{site_id}/module/gallery/{gallery_id}/move_down": {
+      "put": {
+        "summary": "[User] Przesuwa album na liście w dół",
+        "operationId": "gallery_move_down",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/site_id"
+          },
+          {
+            "$ref": "#/components/parameters/gallery_id"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "source": {
+                    "$ref": "#/components/schemas/source"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Przesunięto album w dół"
+          },
+          "400": {
+            "$ref": "#/components/responses/error_400"
+          },
+          "403": {
+            "$ref": "#/components/responses/error_403"
+          },
+          "404": {
+            "$ref": "#/components/responses/error_404"
+          },
+          "500": {
+            "$ref": "#/components/responses/error_500"
+          }
+        },
+        "tags": [
+          "module gallery"
+        ]
+      }
+    },
+    "/site/{site_id}/module/gallery/{gallery_id}/photos/update": {
+      "put": {
+        "summary": "[User] Aktualizuje informacje listy zdjęć",
+        "operationId": "",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/site_id"
+          },
+          {
+            "$ref": "#/components/parameters/gallery_id"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "source",
+                  "payload"
+                ],
+                "properties": {
+                  "source": {
+                    "$ref": "#/components/schemas/source"
+                  },
+                  "payload": {
+                    "type": "object",
+                    "required": [
+                      "photos"
+                    ],
+                    "properties": {
+                      "photos": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "required": [
+                            "photo_id",
+                            "description"
+                          ],
+                          "properties": {
+                            "id": {
+                              "type": "integer",
+                              "description": "Identyfikator zdjęcia"
+                            },
+                            "description": {
+                              "type": "string",
+                              "description": "Opis zdjęcia"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Zaktualizowano opis zdjęcia"
+          },
+          "400": {
+            "$ref": "#/components/responses/error_400"
+          },
+          "403": {
+            "$ref": "#/components/responses/error_403"
+          },
+          "404": {
+            "$ref": "#/components/responses/error_404"
+          },
+          "500": {
+            "$ref": "#/components/responses/error_500"
+          }
+        },
+        "tags": [
+          "module gallery"
+        ]
+      }
+    },
+    "/site/{site_id}/module/gallery/{gallery_id}/photo/{photo_id}": {
+      "delete": {
+        "summary": "[User] Usuwa zdjęcie z albumu",
+        "operationId": "gallery_photo_delete",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/site_id"
+          },
+          {
+            "$ref": "#/components/parameters/gallery_id"
+          },
+          {
+            "$ref": "#/components/parameters/photo_id"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "source": {
+                    "$ref": "#/components/schemas/source"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Usunięto zdjęcie z albumu"
+          },
+          "400": {
+            "$ref": "#/components/responses/error_400"
+          },
+          "403": {
+            "$ref": "#/components/responses/error_403"
+          },
+          "404": {
+            "$ref": "#/components/responses/error_404"
+          },
+          "500": {
+            "$ref": "#/components/responses/error_500"
+          }
+        },
+        "tags": [
+          "module gallery"
+        ]
+      },
+      "put": {
+        "summary": "[User] Reuploaduje zdjęcie",
+        "operationId": "gallery_photo_reupload",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/site_id"
+          },
+          {
+            "$ref": "#/components/parameters/gallery_id"
+          },
+          {
+            "$ref": "#/components/parameters/photo_id"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "file",
+                  "source"
+                ],
+                "properties": {
+                  "file": {
+                    "$ref": "#/components/schemas/gallery_photo_file"
+                  },
+                  "source": {
+                    "$ref": "#/components/schemas/source"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Reuploadowano zdjęcie z albumu"
+          },
+          "400": {
+            "$ref": "#/components/responses/error_400"
+          },
+          "403": {
+            "$ref": "#/components/responses/error_403"
+          },
+          "404": {
+            "$ref": "#/components/responses/error_404"
+          },
+          "500": {
+            "$ref": "#/components/responses/error_500"
+          }
+        },
+        "tags": [
+          "module gallery"
+        ]
+      }
+    },
+    "/site/{site_id}/module/gallery/{gallery_id}/photo/{photo_id}/update": {
+      "put": {
+        "summary": "[User] Aktualizuje informacje zdjęcia",
+        "operationId": "",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/site_id"
+          },
+          {
+            "$ref": "#/components/parameters/gallery_id"
+          },
+          {
+            "$ref": "#/components/parameters/photo_id"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "source",
+                  "payload"
+                ],
+                "properties": {
+                  "source": {
+                    "$ref": "#/components/schemas/source"
+                  },
+                  "payload": {
+                    "type": "object",
+                    "required": [
+                      "description"
+                    ],
+                    "properties": {
+                      "description": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Zaktualizowano opis zdjęcia"
+          },
+          "400": {
+            "$ref": "#/components/responses/error_400"
+          },
+          "403": {
+            "$ref": "#/components/responses/error_403"
+          },
+          "404": {
+            "$ref": "#/components/responses/error_404"
+          },
+          "500": {
+            "$ref": "#/components/responses/error_500"
+          }
+        },
+        "tags": [
+          "module gallery"
+        ]
+      }
+    },
+    "/site/{site_id}/module/gallery/{gallery_id}/photo/{photo_id}/move_up": {
+      "put": {
+        "summary": "[User] Przesuwa zdjęcie na liście w górę",
+        "operationId": "gallery_photo_move_up",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/site_id"
+          },
+          {
+            "$ref": "#/components/parameters/gallery_id"
+          },
+          {
+            "$ref": "#/components/parameters/photo_id"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "source": {
+                    "$ref": "#/components/schemas/source"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Przesunięto zdjęcie w górę"
+          },
+          "400": {
+            "$ref": "#/components/responses/error_400"
+          },
+          "403": {
+            "$ref": "#/components/responses/error_403"
+          },
+          "404": {
+            "$ref": "#/components/responses/error_404"
+          },
+          "500": {
+            "$ref": "#/components/responses/error_500"
+          }
+        },
+        "tags": [
+          "module gallery"
+        ]
+      }
+    },
+    "/site/{site_id}/module/gallery/{gallery_id}/photo/{photo_id}/move_down": {
+      "put": {
+        "summary": "[User] Przesuwa zdjęcie na liście w dół",
+        "operationId": "gallery_photo_move_down",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/site_id"
+          },
+          {
+            "$ref": "#/components/parameters/gallery_id"
+          },
+          {
+            "$ref": "#/components/parameters/photo_id"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "source": {
+                    "$ref": "#/components/schemas/source"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Przesunięto zdjęcie w dół"
+          },
+          "400": {
+            "$ref": "#/components/responses/error_400"
+          },
+          "403": {
+            "$ref": "#/components/responses/error_403"
+          },
+          "404": {
+            "$ref": "#/components/responses/error_404"
+          },
+          "500": {
+            "$ref": "#/components/responses/error_500"
+          }
+        },
+        "tags": [
+          "module gallery"
+        ]
+      }
+    },
+    "/site/{site_id}/module/subject": {
+      "get": {
+        "summary": "[User] Podaje listę tematyk strony",
+        "description": "Lista sortowana po polu: subject",
+        "operationId": "subjects_get_list",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/site_id"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "source": {
+                    "$ref": "#/components/schemas/source"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Lista tematyk",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/subject_list"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error_400"
+          },
+          "403": {
+            "$ref": "#/components/responses/error_403"
+          },
+          "404": {
+            "$ref": "#/components/responses/error_404"
+          },
+          "500": {
+            "$ref": "#/components/responses/error_500"
+          }
+        },
+        "tags": [
+          "module subject"
+        ]
+      },
+      "post": {
+        "summary": "[User] Dodaje tematykę do strony",
+        "operationId": "subjects_add",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/site_id"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/subject_new_payload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Tematyka została dodana pomyślnie"
+          },
+          "400": {
+            "$ref": "#/components/responses/error_400"
+          },
+          "403": {
+            "$ref": "#/components/responses/error_403"
+          },
+          "404": {
+            "$ref": "#/components/responses/error_404"
+          },
+          "500": {
+            "$ref": "#/components/responses/error_500"
+          }
+        },
+        "tags": [
+          "module subject"
+        ]
+      }
+    },
+    "/site/{site_id}/module/subject/{subject_id}": {
+      "get": {
+        "summary": "[User] Podaje tematykę o określonym id",
+        "operationId": "subjects_get_one",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/site_id"
+          },
+          {
+            "$ref": "#/components/parameters/subject_id"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "source": {
+                    "$ref": "#/components/schemas/source"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Dane tematyki",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/subject"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error_400"
+          },
+          "403": {
+            "$ref": "#/components/responses/error_403"
+          },
+          "404": {
+            "$ref": "#/components/responses/error_404"
+          },
+          "500": {
+            "$ref": "#/components/responses/error_500"
+          }
+        },
+        "tags": [
+          "module subject"
+        ]
+      },
+      "put": {
+        "summary": "[User] Aktualizuje tematykę",
+        "operationId": "subjects_change",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/site_id"
+          },
+          {
+            "$ref": "#/components/parameters/subject_id"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/subject_new_payload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Tematyka została zmieniona pomyślnie"
+          },
+          "400": {
+            "$ref": "#/components/responses/error_400"
+          },
+          "403": {
+            "$ref": "#/components/responses/error_403"
+          },
+          "404": {
+            "$ref": "#/components/responses/error_404"
+          },
+          "500": {
+            "$ref": "#/components/responses/error_500"
+          }
+        },
+        "tags": [
+          "module subject"
+        ]
+      },
+      "delete": {
+        "summary": "[User] Usuwa tematykę",
+        "operationId": "subjects_delete",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/site_id"
+          },
+          {
+            "$ref": "#/components/parameters/subject_id"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "source": {
+                    "$ref": "#/components/schemas/source"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Tematyka została usunięta pomyślnie"
+          },
+          "400": {
+            "$ref": "#/components/responses/error_400"
+          },
+          "403": {
+            "$ref": "#/components/responses/error_403"
+          },
+          "404": {
+            "$ref": "#/components/responses/error_404"
+          },
+          "500": {
+            "$ref": "#/components/responses/error_500"
+          }
+        },
+        "tags": [
+          "module subject"
+        ]
+      }
+    },
+    "/site/{site_id}/module/subject/{row_prefix}/{row_id}": {
+      "get": {
+        "summary": "[User] Podaje listę tematyk strony dla danego prefixu i rekordu",
+        "operationId": "subjects_prefix_row_get_list",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/site_id"
+          },
+          {
+            "$ref": "#/components/parameters/row_prefix"
+          },
+          {
+            "$ref": "#/components/parameters/row_id"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "source": {
+                    "$ref": "#/components/schemas/source"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Lista identyfikatorów tematyk",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/id"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error_400"
+          },
+          "403": {
+            "$ref": "#/components/responses/error_403"
+          },
+          "404": {
+            "$ref": "#/components/responses/error_404"
+          },
+          "500": {
+            "$ref": "#/components/responses/error_500"
+          }
+        },
+        "tags": [
+          "module subject"
+        ]
+      },
+      "put": {
+        "summary": "[User] Ustawia tematykę strony dla danego prefixu i rekordu",
+        "operationId": "subjects_prefix_set_row",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/site_id"
+          },
+          {
+            "$ref": "#/components/parameters/row_prefix"
+          },
+          {
+            "$ref": "#/components/parameters/row_id"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/subject_set_payload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Tematyki zostały ustawione dla danego prefixu i rekordu"
+          },
+          "400": {
+            "$ref": "#/components/responses/error_400"
+          },
+          "403": {
+            "$ref": "#/components/responses/error_403"
+          },
+          "404": {
+            "$ref": "#/components/responses/error_404"
+          },
+          "500": {
+            "$ref": "#/components/responses/error_500"
+          }
+        },
+        "tags": [
+          "module subject"
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "rule_app_name_valid": {
+        "pattern": "[a-z0-9\\.\\-_]"
+      },
+      "source": {
+        "type": "object",
+        "required": [
+          "app_name",
+          "user_id"
+        ],
+        "properties": {
+          "app_name": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/rule_app_name_valid"
+              },
+              {
+                "type": "string",
+                "minLength": 10,
+                "example": "pl.cms.v1.api.test"
+              }
+            ]
+          },
+          "user_id": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "example": {
+          "app_name": "pl.cms.v1.api.test",
+          "user_id": 1
+        }
+      },
+      "pagination": {
+        "type": "object",
+        "required": [
+          "page",
+          "pages",
+          "per_page",
+          "total"
+        ],
+        "properties": {
+          "page": {
+            "type": "integer",
+            "example": 1
+          },
+          "pages": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "per_page": {
+            "type": "integer",
+            "example": 50
+          },
+          "total": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "example": {
+          "page": 1,
+          "pages": 0,
+          "per_page": 50,
+          "total": 0
+        }
+      },
+      "paginate": {
+        "type": "object",
+        "required": [
+          "page",
+          "pages",
+          "order",
+          "order_desc"
+        ],
+        "properties": {
+          "page": {
+            "type": "integer",
+            "example": 1
+          },
+          "per_page": {
+            "type": "integer",
+            "minimum": 50
+          },
+          "order": {
+            "type": "string",
+            "example": ""
+          },
+          "order_desc": {
+            "type": "boolean",
+            "example": false
+          }
+        },
+        "example": {
+          "page": 1,
+          "per_page": 50,
+          "order": "id",
+          "order_desc": false
+        }
+      },
+      "id": {
+        "type": "integer",
+        "minimum": 1,
+        "example": 1
+      },
+      "sort": {
+        "type": "integer",
+        "minimum": 1,
+        "example": 1
+      },
+      "gallery_list": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/id"
+          },
+          "site_id": {
+            "$ref": "#/components/schemas/id"
+          },
+          "name": {
+            "type": "string",
+            "example": "Galeria testowa"
+          },
+          "description": {
+            "type": "string"
+          },
+          "sort": {
+            "$ref": "#/components/schemas/sort"
+          },
+          "private": {
+            "type": "boolean"
+          },
+          "edit_date": {
+            "type": "string"
+          },
+          "photos_count": {
+            "type": "integer"
+          }
+        }
+      },
+      "gallery": {
+        "type": "object",
+        "required": [
+          "id",
+          "photos_count"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/id"
+          },
+          "site_id": {
+            "$ref": "#/components/schemas/id"
+          },
+          "name": {
+            "type": "string",
+            "example": "Galeria testowa"
+          },
+          "description": {
+            "type": "string"
+          },
+          "sort": {
+            "$ref": "#/components/schemas/sort"
+          },
+          "private": {
+            "type": "boolean"
+          },
+          "edit_date": {
+            "type": "string"
+          },
+          "photos_count": {
+            "type": "integer"
+          },
+          "photos_uri": {
+            "type": "string"
+          },
+          "photos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/gallery_photo"
+            }
+          }
+        }
+      },
+      "gallery_new": {
+        "type": "object",
+        "required": [
+          "name",
+          "description"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Galeria testowa"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      },
+      "gallery_new_payload": {
+        "type": "object",
+        "required": [
+          "source",
+          "payload"
+        ],
+        "properties": {
+          "source": {
+            "$ref": "#/components/schemas/source"
+          },
+          "payload": {
+            "$ref": "#/components/schemas/gallery_new"
+          }
+        }
+      },
+      "gallery_photo": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/id"
+          },
+          "filename": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "sort": {
+            "$ref": "#/components/schemas/sort"
+          },
+          "filesize": {
+            "type": "integer"
+          },
+          "edit_date": {
+            "type": "string"
+          }
+        }
+      },
+      "gallery_photo_file": {
+        "type": "string",
+        "format": "binary",
+        "pattern": "maxfilesize=10485760, allow_extensions=('gif', 'jpg', 'jpeg', 'png')"
+      },
+      "subject_new": {
+        "type": "object",
+        "required": [
+          "subject"
+        ],
+        "properties": {
+          "subject": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64,
+            "example": "Muzyka"
+          }
+        }
+      },
+      "subject_new_payload": {
+        "type": "object",
+        "required": [
+          "source",
+          "payload"
+        ],
+        "properties": {
+          "source": {
+            "$ref": "#/components/schemas/source"
+          },
+          "payload": {
+            "$ref": "#/components/schemas/subject_new"
+          }
+        }
+      },
+      "subject_list": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/subject"
+          },
+          {
+            "type": "object",
+            "required": [
+              "connections_count"
+            ],
+            "properties": {
+              "connections_count": {
+                "type": "integer",
+                "minLength": 1,
+                "example": 12
+              }
+            }
+          }
+        ]
+      },
+      "subject": {
+        "allOf": [
+          {
+            "type": "object",
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "$ref": "#/components/schemas/id"
+              }
+            }
+          },
+          {
+            "$ref": "#/components/schemas/subject_new"
+          }
+        ]
+      },
+      "subject_set_payload": {
+        "type": "object",
+        "required": [
+          "source",
+          "payload"
+        ],
+        "properties": {
+          "source": {
+            "$ref": "#/components/schemas/source"
+          },
+          "payload": {
+            "type": "object",
+            "required": [
+              "subject_list"
+            ],
+            "properties": {
+              "subject_list": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/id"
+                }
+              }
+            }
+          }
+        }
+      },
+      "error_object": {
+        "type": "object",
+        "required": [
+          "message",
+          "type",
+          "code"
+        ],
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "responses": {
+      "error_400": {
+        "description": "Bad request",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "error"
+              ],
+              "properties": {
+                "error": {
+                  "$ref": "#/components/schemas/error_object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "error_403": {
+        "description": "Forbidden",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "error"
+              ],
+              "properties": {
+                "error": {
+                  "$ref": "#/components/schemas/error_object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "error_404": {
+        "description": "Not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "error"
+              ],
+              "properties": {
+                "error": {
+                  "$ref": "#/components/schemas/error_object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "error_500": {
+        "description": "Internal server error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "error"
+              ],
+              "properties": {
+                "error": {
+                  "$ref": "#/components/schemas/error_object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "parameters": {
+      "site_id": {
+        "name": "site_id",
+        "in": "path",
+        "description": "ID strony klienta",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/id"
+        }
+      },
+      "user_id": {
+        "name": "user_id",
+        "in": "path",
+        "description": "ID użytkownika",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/id"
+        }
+      },
+      "subject_id": {
+        "name": "subject_id",
+        "in": "path",
+        "description": "ID tematyki",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/id"
+        }
+      },
+      "row_prefix": {
+        "name": "row_prefix",
+        "in": "path",
+        "description": "Prefix rekordu powiązania",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "example": "galleries"
+        }
+      },
+      "row_id": {
+        "name": "row_id",
+        "in": "path",
+        "description": "ID rekordu powiązania",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/id"
+        }
+      },
+      "gallery_id": {
+        "name": "gallery_id",
+        "in": "path",
+        "description": "ID rekordu galerii",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/id"
+        }
+      },
+      "photo_id": {
+        "name": "photo_id",
+        "in": "path",
+        "description": "ID rekordu zdjęcia",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/id"
+        }
+      }
+    }
+  }
+}
