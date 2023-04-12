@@ -43,7 +43,6 @@ def handle_exception(e):
     response.content_type = "application/json"
     return response
 
-
 # ping
 class Ping(Resource):
     def get(self):
@@ -51,68 +50,6 @@ class Ping(Resource):
 
 
 api.add_resource(Ping, "/ping")
-
-
-# @app.route("/")
-# def index():
-#     return "Start"
-
-
-# @app.route("/ping")
-# def ping():
-#     return "pong"
-
-
-def restOfShit():
-    # @app.route('/site/{site_id}/module/gallery')
-    # def gallery(site_id):
-    #     return 'gallery'
-
-    # @app.route('/site/{site_id}/module/gallery/{gallery_id}')
-    # def galleryChoice(site_id,gallery_id):
-    #     return 'galleryChoice'
-
-    # @app.route('/site/{site_id}/module/gallery/{gallery_id}/move_up')
-    # def galleryMoveUp(site_id,gallery_id):
-    #     return 'galleryMoveUp'
-
-    # @app.route('/site/{site_id}/module/gallery/{gallery_id}/move_down')
-    # def galleryMoveDown(site_id,gallery_id):
-    #     return 'galleryMoveDown'
-
-    # @app.route('/site/{site_id}/module/gallery/{gallery_id}/photos/update')
-    # def galleryUpdate(site_id,gallery_id):
-    #     return 'galleryUpdate'
-
-    # @app.route('/site/{site_id}/module/gallery/{gallery_id}/photo/{photo_id}')
-    # def photoChoice(site_id,gallery_id,photo_id):
-    #     return 'photoChoice'
-
-    # @app.route('/site/{site_id}/module/gallery/{gallery_id}/photo/{photo_id}/update')
-    # def photoUpdate(site_id,gallery_id,photo_id):
-    #     return 'photoUpdate'
-
-    # @app.route('/site/{site_id}/module/gallery/{gallery_id}/photo/{photo_id}/move_up')
-    # def photoMoveUp(site_id,gallery_id,photo_id):
-    #     return 'photoMoveUp'
-
-    # @app.route('/site/{site_id}/module/gallery/{gallery_id}/photo/{photo_id}/move_down')
-    # def photoMoveDown(site_id,gallery_id,photo_id):
-    #     return 'photoMoveUp'
-
-    # @app.route('/site/{site_id}/module/subject')
-    # def siteList(site_id):
-    #     return 'siteList'
-
-    # @app.route('/site/{site_id}/module/subject/{subject_id}')
-    # def siteListSubject(site_id,subject_id):
-    #     return 'stieListSubject'
-
-    # @app.route('/site/{site_id}/module/subject/{row_prefix}/{row_id}')
-    # def siteListRow(site_id,subject_id,row_prefix,row_id):
-    #     return 'siteListRow'
-    pass
-
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
