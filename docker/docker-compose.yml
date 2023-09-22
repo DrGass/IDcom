@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  fastapi_app:
+    container_name: IDcom_fastapi
+    build:
+      context: ..
+      dockerfile: ./docker/Dockerfile
+    tty: True
+    ports:
+      - "8000:8000"
+    volumes:
+      - ../backend/:/code/
+
+
+  postgres:
+    image: postgres:${POSTGRES_IMAGE_TAG}
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_DB: ${POSTGRES_DATABASE}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
