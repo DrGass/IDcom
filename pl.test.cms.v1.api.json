@@ -1368,7 +1368,7 @@
         "minimum": 1,
         "example": 1
       },
-      "sort": {
+      "sort":   {
         "type": "integer",
         "minimum": 1,
         "example": 1

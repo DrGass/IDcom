@@ -5,12 +5,15 @@ from ..env import get_env
 
 env = get_env()
 
-DB_URI = f"postgresql://{env.postgres_user}:{env.postgres_password}@" \
-         f"{env.postgres_host}:{env.postgres_port}/{env.postgres_database}"
+DB_URI = (
+    f"postgresql://{env.postgres_user}:{env.postgres_password}@"
+    f"{env.postgres_host}:{env.postgres_port}/{env.postgres_database}"
+)
 
 engine = create_engine(DB_URI)
 Session = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
+
 
 class DBSession:
     def __init__(self):

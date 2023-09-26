@@ -1,16 +1,16 @@
 # IDcom
  
-Simple FastAPI website, training for work and in future website for my brother.
+Work training for fastapi
 ## Commands
-- uvicorn app.main:app --reload : starting uvicorn server
-- black <filename> = formatting files
+- black <filename> : formatting files
+- alembic revision --autogenerate : create migration
 
 ### Containers:
  
-- docker-compose build : build image
+- docker-compose -f .\docker\docker-compose.yml build : build image
 - docker-compose down -v : delete containers and volumes
-- docker-compose -f ./docker-compose.yml --env-file ..backend/.env up : start containers with env file
-- docker exec -it fastapi_container bash : going into container terminal
+- docker-compose -f .\docker\docker-compose.yml --env-file .\backend\.env up : start containers with env file
+- docker exec -it IDcom_fastapi bash : going into container terminal
 
 ### Testing
 - pytest : starting tests
