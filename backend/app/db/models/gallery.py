@@ -6,11 +6,11 @@ from sqlalchemy.orm import Session
 
 class Gallery(Base):
     __tablename__ = ("gallery",)
-    id: int = Column(Integer, primary_key=True, autoincrement=True, mininum=1, example=1)
-    site_id: int = Column(Integer, mininum=1, example=1)
+    id: int = Column(Integer, primary_key=True, autoincrement=True)
+    site_id: int = Column(Integer)
     name: str = Column(String)
     description: str = Column(String)
-    sort: int = Column(Integer, mininum=1, example=1)
+    sort: int = Column(Integer)
     private: bool = Column(Boolean)
     edit_date: str = Column(String)
     photos_count: int = Column(Integer)
@@ -56,3 +56,4 @@ class Gallery(Base):
         db.delete(gallery)
         db.commit()
         return gallery
+

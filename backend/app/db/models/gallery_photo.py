@@ -6,10 +6,10 @@ from sqlalchemy.orm import Session
 
 class GalleryPhoto(Base):
     __tablename__ = ("gallery_photo",)
-    id: int = Column(Integer, primary_key=True, autoincrement=True, mininum=1, example=1)
+    id: int = Column(Integer, primary_key=True, autoincrement=True)
     filename: str = Column(String)
     description: str = Column(String)
-    sort: int = Column(Integer, mininum=1, example=1)
+    sort: int = Column(Integer)
     filesize: int = Column(Integer)
     edit_data: str = Column(String)
 
