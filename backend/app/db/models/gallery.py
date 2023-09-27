@@ -19,26 +19,30 @@ class Gallery(Base):
     def get_all(db: Session, site_id: int):
         galleries = db.query(Gallery).filter(Gallery.site_id == site_id).all()
         return galleries
-    
+
     @staticmethod
-    def get_one(db: Session, gallery_id: int):
+    def get_gallery_by_id(db: Session, gallery_id: int):
         gallery = db.query(Gallery).filter(Gallery.id == gallery_id).first()
         if not gallery:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Gallery not found")
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, detail="Gallery not found"
+            )
         return gallery
-    
+
     @staticmethod
     def create_gallery(gallery, db: Session):
         db.add(gallery)
         db.commit()
         db.refresh(gallery)
         return gallery
-    
+
     @staticmethod
     def update_gallery(db: Session, gallery_id: int, gallery):
         gallery = db.query(Gallery).filter(Gallery.id == gallery_id).first()
         if not gallery:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Gallery not found")
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, detail="Gallery not found"
+            )
         gallery.name = gallery.name
         gallery.description = gallery.description
         gallery.sort = gallery.sort
@@ -47,13 +51,14 @@ class Gallery(Base):
         db.commit()
         db.refresh(gallery)
         return gallery
-    
+
     @staticmethod
     def delete_gallery(db: Session, gallery_id: int):
         gallery = db.query(Gallery).filter(Gallery.id == gallery_id).first()
         if not gallery:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Gallery not found")
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, detail="Gallery not found"
+            )
         db.delete(gallery)
         db.commit()
         return gallery
-

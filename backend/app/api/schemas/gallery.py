@@ -1,5 +1,7 @@
 from pydantic import BaseModel, ConfigDict
 from ..schemas.gallery_photo import ShowGalleryPhoto
+from .helpers import CustomPagination
+
 
 class GalleryBase(BaseModel):
     site_id: int
@@ -12,10 +14,15 @@ class GalleryBase(BaseModel):
 
     model_config = ConfigDict(orm_mode=True)
 
+
 class ShowGallery(GalleryBase):
     name: str
-    description : str
-    photos_count : int
+    description: str
+    photos_count: int
     photos: list[ShowGalleryPhoto] = []
-    
+
     model_config = ConfigDict(orm_mode=True)
+
+
+class GalleryPagination(CustomPagination):
+    records: list[ShowGallery] = []

@@ -10,9 +10,10 @@ class GalleryBase(BaseModel):
 
     model_config = ConfigDict(orm_mode=True)
 
+
 class ShowGalleryPhoto(GalleryBase):
     filename: str
     description: str
-    filesize : int
-    
+    filesize: int
+
     model_config = ConfigDict(orm_mode=True)

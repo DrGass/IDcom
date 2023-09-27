@@ -15,14 +15,18 @@ class GalleryPhoto(Base):
 
     @staticmethod
     def get_all(db: Session, gallery_id: int):
-        gallery_photos = db.query(GalleryPhoto).filter(GalleryPhoto.gallery_id == gallery_id).all()
+        gallery_photos = (
+            db.query(GalleryPhoto).filter(GalleryPhoto.gallery_id == gallery_id).all()
+        )
         return gallery_photos
 
     @staticmethod
     def get_one(db: Session, photo_id: int):
         photo = db.query(GalleryPhoto).filter(GalleryPhoto.id == photo_id).first()
         if not photo:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Photo not found")
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, detail="Photo not found"
+            )
         return photo
 
     @staticmethod
@@ -36,7 +40,9 @@ class GalleryPhoto(Base):
     def update_photo(db: Session, photo_id: int, photo):
         photo = db.query(GalleryPhoto).filter(GalleryPhoto.id == photo_id).first()
         if not photo:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Photo not found")
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, detail="Photo not found"
+            )
         photo.filename = photo.filename
         photo.description = photo.description
         photo.sort = photo.sort
@@ -50,9 +56,9 @@ class GalleryPhoto(Base):
     def delete_photo(db: Session, photo_id: int):
         photo = db.query(GalleryPhoto).filter(GalleryPhoto.id == photo_id).first()
         if not photo:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Photo not found")
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, detail="Photo not found"
+            )
         db.delete(photo)
         db.commit()
         return photo
-    
-    #write hello world with this class properties
