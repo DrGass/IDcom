@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "bd08333f9763704b464f837d6e00df9fa306f4c4838bdfe57b045b011840f540"
+            "sha256": "e8880ee04ebe973ae88fc8c3bcf57e573bb7853e59c500e46f45276ba2e062e7"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -474,6 +474,9 @@
             "version": "==2.11.0"
         },
         "pydantic": {
+            "extras": [
+                "dotenv"
+            ],
             "hashes": [
                 "sha256:1607cc106602284cd4a00882986570472f193fde9cb1259bceeaedb26aa79a6d",
                 "sha256:45b5e446c6dfaad9444819a293b921a40e1db1aa61ea08aede0522529ce90e81"

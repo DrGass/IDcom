@@ -4,9 +4,14 @@ from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
 from alembic import context
-from app.db.session import Base, DB_URI
-from app.db.models.gallery_photo import GalleryPhoto
-from app.db.models.gallery import Gallery
+
+import sys
+import os
+sys.path.append(f"{os.path.dirname(os.path.dirname(os.path.abspath(__file__)))}/app")
+
+from db.session import Base, DB_URI
+from db.models.gallery_photo import GalleryPhoto
+from db.models.gallery import Gallery
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -24,7 +29,6 @@ config.set_main_option("sqlalchemy.url", DB_URI)
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-target_metadata = Base.metadata
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:

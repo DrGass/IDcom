@@ -9,7 +9,7 @@ def lower_camel(string: str) -> str:
 
 class BaseConfig(BaseModel):
     model_config = ConfigDict(
-        orm_mode=True, alias_generator=lower_camel, allow_population_by_field_name=True
+        from_attributes=True, alias_generator=lower_camel, populate_by_name=True
     )
 
 

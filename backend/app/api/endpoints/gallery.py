@@ -27,10 +27,10 @@ def create(
     request: galery_schema.GalleryBase,
     db: Session = Depends(get_db),
 ):
-    new_gallery = Gallery.create_gallery(request, session=db)
+    new_gallery = Gallery.create_gallery(request, db)
     return {"success": True, "created_id:": new_gallery.id}
 
-@gallery_router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT)  # noqa: F821
+@gallery_router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT)
 def destroy(
     id: int,
     db: Session = Depends(get_db),

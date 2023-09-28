@@ -8,7 +8,7 @@ class GalleryBase(BaseModel):
     filesize: int
     edit_data: str
 
-    model_config = ConfigDict(orm_mode=True)
+    model_config = ConfigDict(from_attributes=True)
 
 
 class ShowGalleryPhoto(GalleryBase):
@@ -16,4 +16,4 @@ class ShowGalleryPhoto(GalleryBase):
     description: str
     filesize: int
 
-    model_config = ConfigDict(orm_mode=True)
+    model_config = ConfigDict(from_attributes=True)

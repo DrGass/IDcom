@@ -12,7 +12,7 @@ class GalleryBase(BaseModel):
     edit_date: str
     photos_count: int
 
-    model_config = ConfigDict(orm_mode=True)
+    model_config = ConfigDict(from_attributes=True)
 
 
 class ShowGallery(GalleryBase):
@@ -21,7 +21,7 @@ class ShowGallery(GalleryBase):
     photos_count: int
     photos: list[ShowGalleryPhoto] = []
 
-    model_config = ConfigDict(orm_mode=True)
+    model_config = ConfigDict(from_attributes=True)
 
 
 class GalleryPagination(CustomPagination):
