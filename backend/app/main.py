@@ -4,6 +4,7 @@ from fastapi import FastAPI
 
 from api.endpoints.gallery import gallery_router
 
+
 def create_app():
     app = FastAPI()
 

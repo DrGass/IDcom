@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 
 
 class Gallery(Base):
-    __tablename__ = ("gallery",)
+    __tablename__ = ("gallery")
     id: int = Column(Integer, primary_key=True, autoincrement=True)
     site_id: int = Column(Integer)
     name: str = Column(String)
@@ -30,7 +30,8 @@ class Gallery(Base):
         return gallery
 
     @staticmethod
-    def create_gallery(gallery, db: Session):
+    def create_gallery(request, db: Session):
+        gallery = Gallery(**request.model_dump())
         db.add(gallery)
         db.commit()
         db.refresh(gallery)

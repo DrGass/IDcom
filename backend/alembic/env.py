@@ -7,6 +7,7 @@ from alembic import context
 
 import sys
 import os
+
 sys.path.append(f"{os.path.dirname(os.path.dirname(os.path.abspath(__file__)))}/app")
 
 from db.session import Base, DB_URI
