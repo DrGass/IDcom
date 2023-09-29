@@ -7,7 +7,7 @@ from db.models.gallery import Gallery
 gallery_router = APIRouter(prefix="/gallery", tags=["Gallery"])
 
 
-@gallery_router.get("/", response_model=list[galery_schema.GalleryPagination])
+@gallery_router.get("/", response_model=list[galery_schema.ShowGallery])
 def get_all(
     db: Session = Depends(get_db),
 ):
@@ -15,7 +15,7 @@ def get_all(
     return galleries
 
 
-@gallery_router.get(f"/{id}", response_model=galery_schema.ShowGallery)
+@gallery_router.get("/{id}", response_model=galery_schema.ShowGallery)
 def get_by_id(
     id: int,
     db: Session = Depends(get_db),
