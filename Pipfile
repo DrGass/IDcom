@@ -8,7 +8,7 @@ alembic = "==1.12.0"
 annotated-types = "==0.5.0"
 anyio = "==3.7.1"
 bcrypt = "==4.0.1"
-black = "==23.9.1"
+black = "*"
 certifi = "==2023.7.22"
 click = "==8.1.7"
 colorama = "==0.4.6"
@@ -52,6 +52,7 @@ typing-extensions = "==4.7.1"
 uvicorn = "==0.23.2"
 wait-for-it = "==2.2.2"
 pydantic = {version = "==2.3.0", extras = ["dotenv"]}
+fastapi-pagination = "*"
 
 [dev-packages]
 

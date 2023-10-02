@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 
 
 class GalleryPhoto(Base):
-    __tablename__ = ("gallery_photo")
+    __tablename__ = "gallery_photo"
     id: int = Column(Integer, primary_key=True, autoincrement=True)
     filename: str = Column(String)
     description: str = Column(String)

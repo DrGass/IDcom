@@ -21,7 +21,7 @@ Work training for fastapi
 
 ### <question> delete containers and volumes
 
-<answer> docker-compose down -v
+<answer> docker-compose -f .\docker\docker-compose.yml down -v
 
 ### <question> start containers with env file
 

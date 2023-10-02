@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 
 
 class Gallery(Base):
-    __tablename__ = ("gallery")
+    __tablename__ = "gallery"
     id: int = Column(Integer, primary_key=True, autoincrement=True)
     site_id: int = Column(Integer)
     name: str = Column(String)
@@ -38,17 +38,17 @@ class Gallery(Base):
         return gallery
 
     @staticmethod
-    def update_gallery(db: Session, gallery_id: int, gallery):
+    def update_gallery(db: Session, gallery_id: int, new_gallery):
         gallery = db.query(Gallery).filter(Gallery.id == gallery_id).first()
         if not gallery:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND, detail="Gallery not found"
             )
-        gallery.name = gallery.name
-        gallery.description = gallery.description
-        gallery.sort = gallery.sort
-        gallery.private = gallery.private
-        gallery.edit_date = gallery.edit_date
+        gallery.name = new_gallery.name
+        gallery.description = new_gallery.description
+        gallery.sort = new_gallery.sort
+        gallery.private = new_gallery.private
+        gallery.edit_date = new_gallery.edit_date
         db.commit()
         db.refresh(gallery)
         return gallery
